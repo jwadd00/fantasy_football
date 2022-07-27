@@ -27,33 +27,14 @@ url_gen <- function(t,y) {
 }
 
 # cartesian product of teams and all years
-years <- c(2019:2020)
+years <- c(2010:2020)
 arguments <- expand.grid(t = team_list, y = years)
 
 # use apply to pass cartesian product of teams and years through a function expecting two arguments
 full_url_strings <- apply(arguments, 1, function(x) do.call(url_gen, as.list(x)))
 
 # scrape function to scrape and parse data
-full_url_strings <- full_url_strings[1:3]
-
-test<- full_url_strings %>% 
-  read_html() %>% 
-  html_nodes(css = '#TP_pastResults > div > div > div.covers-CoversTeams-pastResultsContainer.row > div > div > div > div > div > div > table') %>%
-  html_table(fill=TRUE) %>% 
-  purrr::keep(~ ncol(.x) == 7) %>% 
-  purrr::keep(~ colnames(.x)[1] == "Regular Season") %>% 
-  .[[1]] %>% 
-  .[-1,]
-
-colnames(test) <- c('date', 'vs', 'score', 'week', 'ats', 'o_u', 'none')
-
-test2 <- test %>% 
-  mutate(team = 'test',
-         week = trimws(gsub("[^0-9.-]", "", week)),
-         year = 2020,
-         line = sub(".*? (.+)", "\\1", ats),
-         o_u = sub(".*? (.+)", "\\1", o_u)) %>%
-  select(team, year, week, line, o_u)
+#full_url_strings <- full_url_strings[1:3]
 
 scrape_vegas <- function(x) {
   

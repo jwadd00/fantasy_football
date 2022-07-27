@@ -10,7 +10,7 @@ url_three <- "&rz=all&ddlTeam=&ddlPosition="
 
 # weeks, years
 weeks <- c(1:16)
-years <- c(2014:2018)
+years <- c(2014:2021)
 
 # cartesian product of positions, weeks and years
 pos_weeks_years <- expand.grid(w = weeks, y = years)

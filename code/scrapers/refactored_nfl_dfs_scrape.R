@@ -16,7 +16,7 @@ generateURL <- function(w,y) {
 
 # weeks and years
 weeks <- c(1:16)
-years <- c(2018)
+years <- c(2014:2021)
 weeks_and_years <- expand.grid(w = weeks, y = years) # cartesian product of weeks and years
 
 # generate all urls using a two argument function / pass cartesian product of weeks and years through function
@@ -37,16 +37,6 @@ scrape_guru <- function(x) {
     colsplit(., split = ';', names = c('week', 'year','gid','player','pos','team','h_a','opp','dkp','salary')) %>%
     .[-1,]
 }  
-
-read_html(url_list[1]) %>%
-  html_nodes('pre') %>%
-  html_text() %>%
-  strsplit(split = '\n') %>%
-  unlist() %>%
-  .[. != ""] %>%
-  colsplit(., split = ';', names = c('week', 'year','gid','player','pos','team','h_a','opp','dkp','salary')) %>%
-  .[-1,] %>% 
-  as_tibble()
 
 # execute scrape function for every url
 plan(multiprocess)
