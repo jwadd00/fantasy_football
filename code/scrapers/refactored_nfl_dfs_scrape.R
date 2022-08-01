@@ -5,7 +5,7 @@ library(reshape)
 library(future.apply)
 
 # partial url strings
-url1 <- "http://rotoguru1.com/cgi-bin/fyday.pl?week="
+url1 <- Sys.getenv("FANTASY_FOOTBALL_DFS_URL")
 url2 <- "&year="
 url3 <- "&game=dk&scsv=1"
 
