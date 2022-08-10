@@ -46,6 +46,7 @@ slow_weather_scrape <- slowly(scrape_weather, rate = rate)
 
 # run scrape jobs across all cores
 plan(multisession, workers = availableCores())
+
 tic()
 weather_logs <- future_map_dfr(url_list, slow_weather_scrape)
 toc()

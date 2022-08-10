@@ -39,8 +39,7 @@ slow_dfs_scrape <- slowly(scrape_dfs, rate = rate)
 
 # run scrape jobs across all cores
 plan(multisession, workers = availableCores())
+
 tic()
 dfs_logs <- future_map_dfr(url_list, slow_dfs_scrape)
 toc()
-
-
