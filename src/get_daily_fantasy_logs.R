@@ -1,9 +1,3 @@
-# load packages
-library(rvest)
-library(tidyverse)
-library(glue)
-library(furrr)
-
 # generate cartesian product of weeks and years (seasons)
 weeks <- c(1:16)
 years <- c(2014:2021)
@@ -41,7 +35,6 @@ scrape_dfs <- function(url) {
 # set a delay to scrape url responsibly
 rate <- rate_delay(pause = 3)
 
-# add safely to keep it moving if error occurs
 slow_dfs_scrape <- slowly(scrape_dfs, rate = rate)
 
 # run scrape jobs across all cores
