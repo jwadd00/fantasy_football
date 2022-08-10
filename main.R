@@ -14,4 +14,5 @@ source('./src/get_weather_data.R')
 # get box score data
 source('./src/get_box_scores.R')
 
-# get Vegas data
+# run vegas scraper
+source('./src/get_vegas_data.R')
