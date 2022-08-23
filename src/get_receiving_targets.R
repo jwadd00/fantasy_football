@@ -1,5 +1,5 @@
 # partial url strings
-url_one <- "http://www.nflsavant.com/targets.php?week="
+url_one <- Sys.getenv("FANTASY_FOOTBALL_RECEIVING_TARGETS")
 url_two <- "&ddlYear="
 url_three <- "&rz=all&ddlTeam=&ddlPosition="
 
