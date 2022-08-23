@@ -16,3 +16,6 @@ source('./src/get_box_scores.R')
 
 # run vegas scraper
 source('./src/get_vegas_data.R')
+
+# run rec targets scraper
+source('./src/get_receiving_targets.R')
