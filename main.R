@@ -17,6 +17,8 @@ source('./src/get_box_scores.R')
 # run vegas scraper
 source('./src/get_vegas_data.R')
 
-# run rec targets scraper
+# run receiving targets scraper
 source('./src/get_receiving_targets.R')
 
+# run red zone receiving targets scraper
+source('./src/get_rz_receiving_targets.R')
