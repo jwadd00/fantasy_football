@@ -1,5 +1,5 @@
 # partial url strings
-url_one <- "http://www.nflsavant.com/targets.php?week="
+url_one <- Sys.getenv("FANTASY_FOOTBALL_RED_ZONE_RECEIVING_TARGETS")
 url_two <- "&ddlYear="
 url_three <- "&rz=redzone&ddlTeam=&ddlPosition="
 
@@ -18,7 +18,7 @@ generateURL <- function(week, year) {
 url_list <- pmap(weeks_and_years, generateURL) %>% 
   unlist()
 
-# function to rip targets data from nfl savant
+# function to rip targets data 
 scrape_rz_targets <- function(url) {
   
   rec_targets <- url %>% 

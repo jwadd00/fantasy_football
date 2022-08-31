@@ -18,7 +18,7 @@ generateURL <- function(week, year) {
 url_list <- pmap(weeks_and_years, generateURL) %>% 
   unlist()
 
-# function to rip targets data from nfl savant
+# function to rip targets data
 scrape_targets <- function(url) {
 
 rec_targets <- url %>% 
