@@ -2,7 +2,7 @@
 url_one <- 'https://www.teamrankings.com/nfl/stat/'
 url_two <- '?date='
 
-# establish sequence of dates
+# establish weekly sample dates for each season
 twenty_fourteen_dates <- lapply(seq(as.Date('2014-09-03'), as.Date('2014-12-17'), by = "week"), toString)
 twenty_fifteen_dates <- lapply(seq(as.Date('2015-09-09'), as.Date('2015-12-23'), by = "week"), toString)
 twenty_sixteen_dates <- lapply(seq(as.Date('2016-09-07'), as.Date('2016-12-21'), by = "week"), toString)
@@ -30,6 +30,8 @@ stats <- c('opponent-passing-yards-per-game','opponent-completion-pct','opponent
 # cartesian product of dates
 dates_and_stats <- crossing(d = dates, s = stats)
 
+
+
 # function to generate URLs using cartesian product dates_and_stats
 generateTeamStatsURLs <- function(s,d) {
   
@@ -38,6 +40,32 @@ generateTeamStatsURLs <- function(s,d) {
 }
 
 # use apply to pass cartesian product of stats and dates through a function expecting two arguments
-
-
 full_team_stats_url_strings <- apply(dates_and_stats, 1, function(x) do.call(generateTeamStatsURLs, as.list(x)))
+
+# function to scrape data
+teamStatsScrape <- function(x) {
+  rankings <- x %>%
+    read_html() %>%
+    html_nodes("table") %>%
+    html_table %>%
+    .[[1]] %>%
+    .[,c(2,3)] %>%
+    rename_at( 2, ~"value" ) %>%
+    mutate(date = sub('.*date=', '', x),
+           stat = sub('\\?.*', '',sub('.*stat/', '', x)))
+} 
+
+test_urls <- sample(full_team_stats_url_strings, 20)
+
+
+# set a delay to scrape url responsibly
+rate <- rate_delay(pause = 3)
+
+slow_team_stats_scrape <- slowly(teamStatsScrape, rate = rate)
+
+# run scrape jobs across all cores
+plan(multisession, workers = availableCores())
+
+tic()
+test <- future_map(test_urls, slow_team_stats_scrape)
+toc()
